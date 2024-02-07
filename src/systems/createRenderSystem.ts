@@ -3,6 +3,7 @@ import { defineGameSystem } from '@/composables/defineGameSystem'
 import { pipe } from 'bitecs'
 import { createRenderSystemSpriteSheet } from './createRenderSystemSpriteSheet'
 import { createRenderSystemGrid } from './createRenderSystemGrid'
+import { createRenderSystemFPS } from './createRenderSystemFPS'
 
 
 export async function createRenderSystem () {
@@ -45,7 +46,11 @@ export async function createRenderSystem () {
     }
     
     // sprite sheets
-    const subsystems = await Promise.all([createRenderSystemSpriteSheet(stage), createRenderSystemGrid(stage)])
+    const subsystems = await Promise.all([
+        createRenderSystemSpriteSheet(stage),
+        createRenderSystemGrid(stage),
+        createRenderSystemFPS(stage),
+    ])
 
     const pipeline = pipe(...subsystems)
 
