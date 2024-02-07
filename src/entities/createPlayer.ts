@@ -1,5 +1,7 @@
+import Velocity from '@/components/Velocity'
 import Position from '../components/Position'
 import SpriteSheet from '../components/SpriteSheet'
+import Movement from '@/components/Movement'
 
 export function usePlayer(eid: number){
     function move(x: number, y: number){
@@ -13,7 +15,10 @@ export function usePlayer(eid: number){
 export const createPlayer = defineGameEntity(({ id, addComponent }) => {
     addComponent(Position)
     addComponent(SpriteSheet)
-    // addComponent(Sprite)
+    addComponent(Velocity)
+    addComponent(Movement)
+
+    Movement.speed[id] = 5
 
     const player = usePlayer(id)
 

@@ -4,6 +4,9 @@ import { createTimeSystem } from './systems/createTimeSystem'
 
 import { createGameWord } from './composables/createGameWord'
 import { createPlayer } from './entities/createPlayer'
+import { createKeyboardSystem } from './systems/createKeyboardSystem'
+import { createMovementSystem } from './systems/createMovementSystem'
+import { createTransformSystem } from './systems/createTransformSystem'
 
 export function createGame(){    
     const world = createGameWord()
@@ -11,8 +14,11 @@ export function createGame(){
     async function start(){
 
         const systems = await Promise.all([
-            createRenderSystem(),
             createTimeSystem(),
+            createKeyboardSystem(),
+            createMovementSystem(),
+            createTransformSystem(),
+            createRenderSystem(),
         ])
 
         const pipeline = pipe(...systems)

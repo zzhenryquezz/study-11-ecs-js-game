@@ -7,7 +7,8 @@ export function createGameWord(){
             delta: 0,
             elapsed: 0,
             then: performance.now()
-        }
+        },
+        keyboard: {} as Record<KeyboardEvent['code'], boolean>,
     })
 }
 

@@ -6,20 +6,26 @@ import { createRenderSystemGrid } from './createRenderSystemGrid'
 import { createRenderSystemFPS } from './createRenderSystemFPS'
 
 
-export async function createRenderSystem () {
+export async function createRenderSystem (tileSize: number = 32) {
     // renderer & stage
     const stage = new Container()
 
+    const width = 800
+    const height = 600
+
+    const fixedWidth = Math.round(width / tileSize) * tileSize
+    const fixedHeight = Math.round(height / tileSize) * tileSize
+
     const renderer = await autoDetectRenderer({
-        width: window.innerWidth,
-        height: window.innerHeight,
+        width: fixedWidth,
+        height: fixedHeight,
         backgroundColor: 'black',
         antialias: false,
     })
 
     const canvas = renderer.view.canvas as HTMLCanvasElement
     
-    canvas.setAttribute('style', 'position: absolute; top: 0; left: 0; z-index: 0')
+    canvas.setAttribute('style', 'position: absolute; transform: translate(-50%, -50%); top: 50%; left: 50%;')
 
     document.body.appendChild(canvas)
         
