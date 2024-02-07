@@ -11,6 +11,7 @@ Collect all the coins in the game world, and return to the starting point.
 - Vitejs
 - TypeScript
 - PixiJS
+- [Assets pack](https://anokolisa.itch.io/dungeon-crawler-pixel-art-asset-pack)
 
 ## Systems
 

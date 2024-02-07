@@ -1,5 +1,5 @@
-import { createGame } from "./game";
+import { createGame } from './game'
 
-const game = createGame();
+const game = createGame()
 
-game.start();
+game.start()
