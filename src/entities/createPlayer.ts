@@ -18,7 +18,11 @@ export const createPlayer = defineGameEntity(({ id, addComponent }) => {
     const player = usePlayer(id)
 
     // Sprite.name[id] = encode('player.png')
-    SpriteSheet.name[id] = encode('player/idle-sheet.json')
+    SpriteSheet.image[id] = encode('player/idle-sheet.png')
+    SpriteSheet.width[id] = 128
+    SpriteSheet.height[id] = 32
+    SpriteSheet.frameSize[id] = 32
+    SpriteSheet.frameCount[id] = 4
 
     return player
 })
