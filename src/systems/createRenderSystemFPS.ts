@@ -1,10 +1,10 @@
-import { Container, Graphics, Text } from 'pixi.js'
+import { Container, Graphics, Renderer, Text } from 'pixi.js'
 import { defineGameSystem } from '@/composables/defineGameSystem'
 import  throttle from 'lodash-es/throttle'
 import { getAllEntities } from 'bitecs'
 
 
-export async function createRenderSystemFPS (stage: Container) {
+export async function createRenderSystemFPS (stage: Container, renderer: Renderer) {
 
     const gameObjects = new Map<string, Text>()
 
@@ -12,7 +12,7 @@ export async function createRenderSystemFPS (stage: Container) {
 
     const backgroundSize = 200
 
-    background.rect(window.innerWidth - backgroundSize - 32, 32, backgroundSize, 100).fill('red')
+    background.rect(renderer.width - backgroundSize - 32, 32, backgroundSize, 100).fill('red')
 
     background.alpha = 0.5
 

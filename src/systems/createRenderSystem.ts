@@ -55,7 +55,7 @@ export async function createRenderSystem (tileSize: number = 32) {
     const subsystems = await Promise.all([
         createRenderSystemSpriteSheet(stage),
         createRenderSystemGrid(stage),
-        createRenderSystemFPS(stage),
+        createRenderSystemFPS(stage, renderer),
     ])
 
     const pipeline = pipe(...subsystems)
