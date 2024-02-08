@@ -1,8 +1,6 @@
 import { Container, Graphics, Renderer, Text } from 'pixi.js'
 import { defineGameSystem } from '@/composables/defineGameSystem'
-import  throttle from 'lodash-es/throttle'
 import { getAllEntities } from 'bitecs'
-
 
 export async function createRenderSystemFPS (stage: Container, renderer: Renderer) {
 
@@ -17,9 +15,8 @@ export async function createRenderSystemFPS (stage: Container, renderer: Rendere
     background.alpha = 0.5
 
     stage.addChild(background)
-
     
-    const update = throttle((fps: number, entityLength: number) => {        
+    const update = (fps: number, entityLength: number) => {        
 
         let fpsText = gameObjects.get('fps')
         let entityLengthText = gameObjects.get('entityLength')
@@ -71,7 +68,7 @@ export async function createRenderSystemFPS (stage: Container, renderer: Rendere
 
         stage.addChild(entityLengthText)
         
-    }, 500)
+    }
 
     return defineGameSystem((world) => {
 

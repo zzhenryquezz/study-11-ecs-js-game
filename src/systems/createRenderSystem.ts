@@ -4,6 +4,7 @@ import { pipe } from 'bitecs'
 import { createRenderSystemSpriteSheet } from './createRenderSystemSpriteSheet'
 import { createRenderSystemGrid } from './createRenderSystemGrid'
 import { createRenderSystemFPS } from './createRenderSystemFPS'
+import { createRenderSystemTile } from './createRenderSystemTile'
 
 
 export async function createRenderSystem (tileSize: number = 32) {
@@ -56,6 +57,7 @@ export async function createRenderSystem (tileSize: number = 32) {
         createRenderSystemSpriteSheet(stage),
         createRenderSystemGrid(stage),
         createRenderSystemFPS(stage, renderer),
+        createRenderSystemTile(stage),
     ])
 
     const pipeline = pipe(...subsystems)

@@ -13,14 +13,6 @@ export async function createRenderSystemGrid (stage: Container) {
 
         const xLength = Math.floor(window.innerWidth / tileSize) + 1
         const yLength = Math.floor(window.innerHeight / tileSize) + 1
-
-        function draw(gameObject: Graphics, x: number, y: number) {
-            gameObject.clear()
-
-            gameObject.alpha = 0.1
-            
-            gameObject.rect(x, y, tileSize, tileSize).stroke('red')
-        }
         
         function update(index: number, y = 0) {
 
@@ -31,16 +23,16 @@ export async function createRenderSystemGrid (stage: Container) {
             let gameObject = gameObjects.get(id)
 
             if (gameObject) {
-                gameObject.clear()
-
-                draw(gameObject, x, y)
-
                 return
             }
 
             gameObject = new Graphics()
 
-            draw(gameObject, x, y)
+            gameObject.zIndex = -1
+
+            gameObject.alpha = 0.1
+            
+            gameObject.rect(x, y, tileSize, tileSize).stroke('red')
 
             gameObjects.set(id, gameObject)
 
