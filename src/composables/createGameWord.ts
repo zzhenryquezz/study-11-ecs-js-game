@@ -5,7 +5,7 @@ export function createGameWord(){
     const radio = window.innerWidth / window.innerHeight
 
     const screenWidth = Math.min(1600, window.innerWidth)
-    const screenHeight = Math.min(1000, window.innerHeight)
+    const screenHeight = Math.min(1200, window.innerHeight)
 
     const cameraHeight = screenHeight * 0.4
     const cameraWidth = cameraHeight * radio

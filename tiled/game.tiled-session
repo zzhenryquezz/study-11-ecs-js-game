@@ -9,12 +9,15 @@
     "file.lastUsedOpenFilter": "Todos os Ficheiros (*)",
     "fileStates": {
         "maps/01.tmx": {
-            "scale": 0.795625,
+            "scale": 1.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 219.9528672427337,
-                "y": 120.03142183817755
+                "x": 289.6666666666667,
+                "y": 186.66666666666669
             }
+        },
+        "maps/01.tmx#01": {
+            "scaleInDock": 1.5
         }
     },
     "last.exportedFilePath": "//wsl.localhost/Ubuntu/home/henryque/github/zzhenryquezz/study-11-ecs-js-game/tiled/maps",

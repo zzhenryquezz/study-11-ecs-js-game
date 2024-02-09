@@ -1,54 +1,73 @@
-import { Container, Graphics, Renderer, v8_0_0 } from 'pixi.js'
+import { Container, Graphics, Renderer } from 'pixi.js'
 import { GameWord } from '@/composables/createGameWord'
-import CameraFocus from '@/components/CameraFocus'
+import Camera from '@/components/Camera'
 import { defineQuery } from 'bitecs'
 import Position from '@/components/Position'
 
 export async function createRenderCamera (stage: Container, renderer: Renderer) {
-    const query = defineQuery([CameraFocus, Position])
+    const query = defineQuery([Camera, Position])
 
-    const camera = new Graphics()
+    const cameraGraphics = new Map<number, Graphics>()
+    function setCamera(eid: number, screen: GameWord['screen']) {
+        const size = Camera.size[eid]        
+        const x = Position.x[eid]
+        const y = Position.y[eid]
+        const stroke = Camera.stroke[eid]
+        const active = Camera.active[eid]
+        
+        const radio = screen.width / screen.height
+        
+        const width = size
+        const height = size / radio        
+        const scaleX = renderer.width / width
+        const scaleY = renderer.height / height
+        
+        const xCenter = x - width / 2
+        const yCenter = y - height / 2
 
-    stage.addChild(camera)
 
-    camera.zIndex = 1000
+        if (active) {
+            const stageX = Math.min(0, -xCenter * scaleX)
+            const stageY = Math.min(0, -yCenter * scaleY)
+            const maxStageX = -(renderer.width - width) * scaleX
+            const maxStageY = -(renderer.height - height) * scaleY
 
-    const first = false
+            stage.scale.x = scaleX
+            stage.scale.y = scaleY
 
-    function move(x: number, y: number, width: number, height: number){
-        camera.clear()
+            stage.x = Math.max(stageX, maxStageX)
+            stage.y = Math.max(stageY, maxStageY)
+        }
 
-        camera.rect(x, y, width, height).stroke('yellow')
 
-        const xScale = renderer.width / width
-        const yScale = renderer.height / height
+        if (!stroke) return
 
-        stage.scale.x = xScale
-        stage.scale.y = yScale
+        let graphic = cameraGraphics.get(eid)
 
-        stage.x = Math.min(0, -x * xScale)
-        stage.y = Math.min(0, -y * yScale)
+        if (!graphic) {
+            graphic = new Graphics()
 
-        console.log('move', x)
-    }
+            graphic.zIndex = 1000
 
-    function onFocus(eid: number, camera: GameWord['camera']) {
-        const { x, y } = usePosition(eid)
+            cameraGraphics.set(eid, graphic)
 
-        move(x - camera.width / 2, y - camera.height / 2, camera.width, camera.height)
+            stage.addChild(graphic)
+        }
+
+        graphic.clear()
+
+        const graphicX = Math.max(0, xCenter)
+        const graphicY = Math.max(0, yCenter)
+        const maxGraphicX = renderer.width - width
+        const maxGraphicY = renderer.height - height
+
+        graphic.rect(Math.min(graphicX, maxGraphicX), Math.min(graphicY, maxGraphicY) , width, height).stroke('yellow')
+        
     }
 
     return defineGameSystem(world => {
-
-        const camera = world.camera
-
-        // if (!first) {
-        //     first = true
-        //     move(0, 0, camera.width, camera.height)
-        // }
-        
         for (const eid of query(world)) {
-            onFocus(eid, world.camera)
+            setCamera(eid, world.camera)
         }
         
         return world
