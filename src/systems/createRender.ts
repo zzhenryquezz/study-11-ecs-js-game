@@ -1,13 +1,13 @@
 import { Assets, autoDetectRenderer, Container } from 'pixi.js'
 import { defineGameSystem } from '@/composables/defineGameSystem'
 import { pipe } from 'bitecs'
-import { createRenderSystemSpriteSheet } from './createRenderSystemSpriteSheet'
-import { createRenderSystemGrid } from './createRenderSystemGrid'
-import { createRenderSystemFPS } from './createRenderSystemFPS'
-import { createRenderSystemTile } from './createRenderSystemTile'
+import { createRenderSpriteSheet } from './createRenderSpriteSheet'
+import { createRenderGrid } from './createRenderGrid'
+import { createRenderDebug } from './createRenderDebug'
+import { createRenderTile } from './createRenderTile'
 
 
-export async function createRenderSystem (tileSize: number = 32) {
+export async function createRender (tileSize: number = 32) {
     // renderer & stage
     const stage = new Container()
 
@@ -54,10 +54,10 @@ export async function createRenderSystem (tileSize: number = 32) {
     
     // sprite sheets
     const subsystems = await Promise.all([
-        createRenderSystemSpriteSheet(stage),
-        createRenderSystemGrid(stage),
-        createRenderSystemFPS(stage, renderer),
-        createRenderSystemTile(stage),
+        createRenderSpriteSheet(stage),
+        createRenderGrid(stage),
+        createRenderDebug(stage, renderer),
+        createRenderTile(stage),
     ])
 
     const pipeline = pipe(...subsystems)

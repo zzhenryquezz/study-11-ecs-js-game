@@ -3,7 +3,7 @@ import Position from '@/components/Position'
 import SpriteSheet from '@/components/SpriteSheet'
 import { defineQuery, enterQuery } from 'bitecs'
 
-export async function createRenderSystemSpriteSheet (stage: Container) {
+export async function createRenderSpriteSheet (stage: Container) {
     const query = defineQuery([Position, SpriteSheet])
     
     const sheets = new Map<number, PixiSpriteSheet>()

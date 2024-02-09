@@ -1,6 +1,6 @@
 import { defineGameSystem } from '../composables/defineGameSystem'
 
-export function createTimeSystem() {
+export function createTime() {
     return defineGameSystem((world) => {
         const { time } = world
         

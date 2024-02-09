@@ -2,7 +2,7 @@ import Position from '@/components/Position'
 import Velocity from '@/components/Velocity'
 import { defineQuery } from 'bitecs'
 
-export function createTransformSystem() {
+export function createTransform() {
     const query = defineQuery([Position, Velocity])
 
     return defineGameSystem(world => {

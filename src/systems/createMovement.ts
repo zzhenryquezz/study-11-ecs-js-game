@@ -3,7 +3,7 @@ import Position from '@/components/Position'
 import Velocity from '@/components/Velocity'
 import { defineQuery } from 'bitecs'
 
-export function createMovementSystem() {
+export function createMovement() {
     const query = defineQuery([Position, Velocity, Movement])
 
     

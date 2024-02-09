@@ -3,7 +3,7 @@ import Tile from '@/components/Tile'
 import { defineQuery, enterQuery } from 'bitecs'
 import { Container, Rectangle, Sprite, Texture } from 'pixi.js'
 
-export function createRenderSystemTile(stage: Container) {
+export function createRenderTile(stage: Container) {
     const query = defineQuery([Position, Tile])
 
     

@@ -1,4 +1,4 @@
-export function createKeyboardSystem() {
+export function createKeyboard() {
 
     const keys = {} as Record<KeyboardEvent['code'], boolean>
 

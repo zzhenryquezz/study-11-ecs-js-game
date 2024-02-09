@@ -2,7 +2,7 @@ import { Container, Graphics, Renderer, Text } from 'pixi.js'
 import { defineGameSystem } from '@/composables/defineGameSystem'
 import { getAllEntities } from 'bitecs'
 
-export async function createRenderSystemFPS (stage: Container, renderer: Renderer) {
+export async function createRenderDebug (stage: Container, renderer: Renderer) {
 
     const gameObjects = new Map<string, Text>()
 

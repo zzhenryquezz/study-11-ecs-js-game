@@ -2,7 +2,7 @@ import { Container, Graphics } from 'pixi.js'
 import { defineGameSystem } from '@/composables/defineGameSystem'
 
 
-export async function createRenderSystemGrid (stage: Container) {
+export async function createRenderGrid (stage: Container) {
 
     const gameObjects = new Map<string, Graphics>()
 
