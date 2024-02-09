@@ -6,17 +6,20 @@ import { createRenderGrid } from './createRenderGrid'
 import { createRenderDebug } from './createRenderDebug'
 import { createRenderTile } from './createRenderTile'
 import { createRenderSprite } from './createRenderSprite'
+import { createRenderCamera } from './createRenderCamera'
+import { GameWord } from '@/composables/createGameWord'
 
 
-export async function createRender (tileSize: number = 32) {
+export async function createRender (world: GameWord) {
+    const { screen, tiles } = world
     // renderer & stage
     const stage = new Container()
 
-    const width = 800
-    const height = 600
+    const width = screen.width - 200
+    const height = screen.height - 200
 
-    const fixedWidth = Math.round(width / tileSize) * tileSize
-    const fixedHeight = Math.round(height / tileSize) * tileSize
+    const fixedWidth = Math.round(width / tiles.size) * tiles.size
+    const fixedHeight = Math.round(height / tiles.size) * tiles.size
 
     const renderer = await autoDetectRenderer({
         width: fixedWidth,
@@ -27,9 +30,28 @@ export async function createRender (tileSize: number = 32) {
 
     const canvas = renderer.view.canvas as HTMLCanvasElement
     
-    canvas.setAttribute('style', 'position: absolute; transform: translate(-50%, -50%); top: 50%; left: 50%;')
+    canvas.setAttribute('style', [
+        'position: absolute',
+        'top: 50%',
+        'left: 50%',
+        'transform: translate(-50%, -50%)',
+        'border: 1px solid white',
+        'image-rendering: pixelated',
+        'overflow: hidden',
+        'border-radius: 5px',
+    ].join('; '))
 
     document.body.appendChild(canvas)
+
+    addEventListener('resize', () => {
+        const width = window.innerWidth - 100
+        const height = window.innerHeight - 100
+
+        const fixedWidth = Math.round(width / tiles.size) * tiles.size
+        const fixedHeight = Math.round(height / tiles.size) * tiles.size
+
+        renderer.resize(fixedWidth, fixedHeight)
+    })
         
     // assets & sprites
     const files = Object.entries(import.meta.glob('../assets/**/*.png', {
@@ -60,6 +82,7 @@ export async function createRender (tileSize: number = 32) {
         createRenderDebug(stage, renderer),
         createRenderTile(stage),
         createRenderSprite(stage),
+        createRenderCamera(stage,renderer),
     ])
 
     const pipeline = pipe(...subsystems)

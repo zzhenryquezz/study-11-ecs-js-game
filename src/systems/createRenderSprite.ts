@@ -34,9 +34,9 @@ export async function createRenderSprite (stage: Container) {
         
     }
 
-    function onUpdate(eid: number) {
+    // function onUpdate(eid: number) {
 
-    }
+    // }
 
     return defineGameSystem(world => {
 
@@ -45,9 +45,9 @@ export async function createRenderSprite (stage: Container) {
             onEnter(eid)
         }
 
-        for (const eid of query(world)) {
-            onUpdate(eid)
-        }
+        // for (const eid of query(world)) {
+        //     onUpdate(eid)
+        // }
 
         return world
     })

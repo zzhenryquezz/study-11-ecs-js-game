@@ -9,16 +9,16 @@ export async function createRenderGrid (stage: Container) {
     
     return defineGameSystem((world) => {
 
-        const { tileSize } = world
+        const { tiles } = world
 
-        const xLength = Math.floor(window.innerWidth / tileSize) + 1
-        const yLength = Math.floor(window.innerHeight / tileSize) + 1
+        const xLength = Math.floor(window.innerWidth / tiles.size) + 1
+        const yLength = Math.floor(window.innerHeight / tiles.size) + 1
         
         function update(index: number, y = 0) {
 
             const id = `${index}-${y}`
 
-            const x = index * tileSize
+            const x = index * tiles.size
 
             let gameObject = gameObjects.get(id)
 
@@ -32,7 +32,7 @@ export async function createRenderGrid (stage: Container) {
 
             gameObject.alpha = 0.1
             
-            gameObject.rect(x, y, tileSize, tileSize).stroke('red')
+            gameObject.rect(x, y, tiles.size, tiles.size).stroke('red')
 
             gameObjects.set(id, gameObject)
 
@@ -42,7 +42,7 @@ export async function createRenderGrid (stage: Container) {
         for (let index = 0; index < xLength; index++) {
 
             for (let y = 0; y < yLength; y++) {
-                update(index, y * tileSize)
+                update(index, y * tiles.size)
             }            
         }
 

@@ -20,7 +20,7 @@ export function createGame(){
             createKeyboard(),
             createMovement(),
             createTransform(),
-            await createRender(),
+            await createRender(world),
         ]
 
         const pipeline = pipe(...systems)

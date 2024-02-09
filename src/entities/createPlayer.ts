@@ -2,23 +2,17 @@ import Velocity from '@/components/Velocity'
 import Position from '../components/Position'
 import SpriteSheet from '../components/SpriteSheet'
 import Movement from '@/components/Movement'
-
-export function usePlayer(eid: number){
-    function move(x: number, y: number){
-        Position.x[eid] = x
-        Position.y[eid] = y
-    }
-
-    return { eid, move }
-}
+import CameraFocus from '@/components/CameraFocus'
 
 export const createPlayer = defineGameEntity(({ id, addComponent }) => {
     addComponent(Position)
     addComponent(SpriteSheet)
     addComponent(Velocity)
     addComponent(Movement)
+    addComponent(CameraFocus)
 
     Movement.speed[id] = 5
+    CameraFocus.eid[id] = id
 
     const player = usePlayer(id)
 
