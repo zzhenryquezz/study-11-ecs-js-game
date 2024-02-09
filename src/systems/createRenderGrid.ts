@@ -9,10 +9,10 @@ export async function createRenderGrid (stage: Container) {
     
     return defineGameSystem((world) => {
 
-        const { tiles } = world
+        const { tiles, screen } = world
 
-        const xLength = Math.floor(window.innerWidth / tiles.size) + 1
-        const yLength = Math.floor(window.innerHeight / tiles.size) + 1
+        const xLength = Math.floor(screen.width / tiles.size) + 1
+        const yLength = Math.floor(screen.height / tiles.size) + 1
         
         function update(index: number, y = 0) {
 
