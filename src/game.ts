@@ -25,7 +25,7 @@ export function createGame(){
 
         const pipeline = pipe(...systems)
 
-        createPlayer(world)
+        createPlayer(world).move(100, 100)  
         createLevel(world)
 
         setInterval(() => pipeline(world), 16)

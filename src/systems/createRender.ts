@@ -5,6 +5,7 @@ import { createRenderSpriteSheet } from './createRenderSpriteSheet'
 import { createRenderGrid } from './createRenderGrid'
 import { createRenderDebug } from './createRenderDebug'
 import { createRenderTile } from './createRenderTile'
+import { createRenderSprite } from './createRenderSprite'
 
 
 export async function createRender (tileSize: number = 32) {
@@ -58,6 +59,7 @@ export async function createRender (tileSize: number = 32) {
         createRenderGrid(stage),
         createRenderDebug(stage, renderer),
         createRenderTile(stage),
+        createRenderSprite(stage),
     ])
 
     const pipeline = pipe(...subsystems)
