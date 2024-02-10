@@ -95,6 +95,7 @@ export async function createRenderSpriteSheet (stage: Container) {
             if (!animation) return
 
             animation.scale.x = flipX ? -1 : 1
+            animation.anchor.x = flipX ? 1 : 0
 
             animation.x = x
             animation.y = y
