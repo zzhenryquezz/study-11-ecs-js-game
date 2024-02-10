@@ -1,12 +1,12 @@
-export function usePlayer(eid: number){
-
+export function useItem(eid: number) {
     const position = usePosition(eid)
+
     const sheet = useSpriteSheet(eid)
 
-    return {
+    return  {
         eid,
         position,
         sheet,
-        
     }
+
 }

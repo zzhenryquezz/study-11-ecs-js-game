@@ -38,7 +38,7 @@ export function createRenderTileMap(stage: Container) {
         attributeNamePrefix: '',
     })
 
-    const files = Object.entries(import.meta.glob('../assets/tileMaps/**/*.tmx', {
+    const files = Object.entries(import.meta.glob('../assets/maps/*.tmx', {
         as: 'raw',
         eager: true,
     }))
@@ -46,7 +46,7 @@ export function createRenderTileMap(stage: Container) {
     const tileMaps = new Map<string, Map>()
 
     files.forEach(([url, data]) => {
-        const name = url.replace('../assets/tileMaps/', '')
+        const name = url.replace('../assets/maps/', '')
 
         const content = parser.parse(data)
 

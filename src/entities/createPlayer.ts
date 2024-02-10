@@ -4,6 +4,7 @@ import SpriteSheet from '../components/SpriteSheet'
 import Movement from '@/components/Movement'
 import Camera from '@/components/Camera'
 import Collision from '@/components/Collision'
+import Inventory from '@/components/Inventory'
 
 export const createPlayer = defineGameEntity(({ id, addManyComponents }) => {
 
@@ -13,10 +14,11 @@ export const createPlayer = defineGameEntity(({ id, addManyComponents }) => {
         Velocity,
         Movement,
         Camera,
-        Collision
+        Collision,
+        Inventory
     )
 
-    Movement.speed[id] = .5
+    Movement.speed[id] = .2
     
     Camera.size[id] = 400
     Camera.stroke[id] = 1
@@ -25,15 +27,16 @@ export const createPlayer = defineGameEntity(({ id, addManyComponents }) => {
     Collision.width[id] = 32
     Collision.height[id] = 32
 
-    const player = usePlayer(id)
+    const { position, sheet } = usePlayer(id)
 
-    player.move(32, 32)  
+    position.setPosition(200, 200)
+    
+    sheet
+        .setImage('player/idle-sheet.png')
+        .setWidth(128)
+        .setHeight(32)
+        .setFrameSize(32)
+        .setFrameCount(4)
 
-    SpriteSheet.image[id] = encode('player/idle-sheet.png')
-    SpriteSheet.width[id] = 128
-    SpriteSheet.height[id] = 32
-    SpriteSheet.frameSize[id] = 32
-    SpriteSheet.frameCount[id] = 4
-
-    return player
+    return usePlayer(id)
 })

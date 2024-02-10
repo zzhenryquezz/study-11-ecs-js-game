@@ -34,18 +34,18 @@ export async function createRenderSpriteSheet (stage: Container) {
                     frame: {
                         x: i * frameSize,
                         y: 0,
-                        w: 32,
-                        h: 32
+                        w: frameSize,
+                        h: frameSize
                     },
                     sourceSize:{
-                        w: 32,
-                        h: 32
+                        w: frameSize,
+                        h: frameSize
                     },
                     spriteSourceSize: {
                         x: 0,
                         y: 0,
-                        w: 32,
-                        h: 32
+                        w: frameSize,
+                        h: frameSize
                     }
                 }))
                 .map((i, index) => [index, i])

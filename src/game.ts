@@ -36,6 +36,7 @@ export function createGame(){
         const pipeline = pipe(...systems)
 
         createPlayer(world)
+        
         createLevel(world)
 
         setInterval(() => pipeline(world), 16)
