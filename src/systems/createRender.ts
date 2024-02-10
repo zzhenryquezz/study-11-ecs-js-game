@@ -9,6 +9,8 @@ import { createRenderSprite } from './createRenderSprite'
 import { createRenderCamera } from './createRenderCamera'
 import { GameWord } from '@/composables/createGameWord'
 import { createRenderTileMap } from './createRenderTilemap'
+import { createRenderTileMapCollision } from './createRenderTileMapCollision'
+import { createRenderCollision } from './createRenderColission'
 
 
 export async function createRender (world: GameWord) {
@@ -72,8 +74,6 @@ export async function createRender (world: GameWord) {
             url: url,
             src: url
         })
-
-        console.log('loaded asset', name)
     }
     
     // sprite sheets
@@ -84,7 +84,12 @@ export async function createRender (world: GameWord) {
         createRenderTile(stage),
         createRenderSprite(stage),
         createRenderCamera(stage,renderer),
-        createRenderTileMap(stage)
+        
+        createRenderTileMap(stage),
+        
+        // debug
+        createRenderTileMapCollision(stage),
+        createRenderCollision(stage),
     ])
 
     const pipeline = pipe(...subsystems)

@@ -22,7 +22,7 @@ export async function createRenderSprite (stage: Container) {
 
         if (scale !== 0) {
             sprite.scale.x = scale
-            sprite.scale.y   = scale
+            sprite.scale.y = scale
         }
 
         sprite.x = x

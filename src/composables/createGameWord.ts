@@ -9,7 +9,7 @@ export function createGameWord(){
     const screen = {
         width: 1600,
         height: 1200,
-        scale: .5
+        scale: 1
     }
 
     const time = {

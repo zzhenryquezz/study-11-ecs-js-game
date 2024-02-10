@@ -1,11 +1,19 @@
-import TileMap from '@/components/TileMap'
-import Position from '@/components/Position'
+import { createTileMap } from './createTileMap'
 
-export const createLevel = defineGameEntity(({ id, addComponent }) => {
-    addComponent(TileMap)
-    addComponent(Position)
+export const createLevel = defineGameEntity(({ world }) => {
+    // const background = createTileMap(world)
+    const collisions = createTileMap(world)
 
-    TileMap.tmx[id] = encode('levels/level-01.tmx')
-    TileMap.image[id] = encode('tileMaps/tiles.png')
+    // background
+    //     .setTmx('levels/level-01.tmx')
+    //     .setImage('tileMaps/tiles.png')
+    //     .setLayerName('background')
+    //     .setEnableCollision(0)
+    
+    collisions
+        .setTmx('levels/level-01.tmx')
+        .setImage('tileMaps/tiles.png')
+        .setLayerName('collisions')
+        .setEnableCollision(1)
 
 })

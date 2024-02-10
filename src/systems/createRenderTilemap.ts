@@ -70,61 +70,6 @@ export function createRenderTileMap(stage: Container) {
         })
     })
 
-    function renderLayer(layer: Layer, tileSet: TileSet, texture: Texture) {
-        const matrix = unFlatten<number[]>(layer.data, layer.width)
-
-        for (let y = 0; y < matrix.length; y++) {
-            const row = matrix[y]
-
-            for (let x = 0; x < row.length; x++) {
-                const id = row[x]
-
-                if (id === 0) continue
-
-                const frameLineX = (id % tileSet.columns) - 1
-                const frameLineY = Math.floor(id / tileSet.columns)
-
-                const frameX = frameLineX * tileSet.tilewidth
-                const frameY = frameLineY * tileSet.tileheight
-
-                const frame = new Rectangle(frameX, frameY, tileSet.tilewidth, tileSet.tileheight)
-
-                const tile = new Texture({
-                    source: texture.source,
-                    frame,
-                })
-
-                const sprite = new Sprite(tile)
-
-                sprite.y = y * tileSet.tileheight
-                sprite.x = x * tileSet.tilewidth
-
-                stage.addChild(sprite)
-            }
-        }
-    }
-
-    function setCollisions(layer: Layer, eid: number){
-
-        const tileMap = useTileMap(eid)
-
-        const result = []
-
-        for (let i = 0; i < layer.data.length; i++) {
-            const id = layer.data[i]
-
-            if (id === 0) continue
-
-            const x = i % layer.width * 16
-            const y = Math.floor(i / layer.width) * 16
-
-            result.push({ x, y })         
-        }
-
-        const positions = result.map(r => [r.x, r.y, 16, 16]).flat()
-
-        tileMap.setPositions(positions)
-    }
 
     function onEnter(eid: number) {
 
@@ -132,8 +77,8 @@ export function createRenderTileMap(stage: Container) {
             tmx,
             image,
             layerName,
-            enableCollision,
-            setIsLoaded
+            setIsLoaded,
+            setPositions,
         } = useTileMap(eid)
 
         const map = tileMaps.get(tmx)
@@ -156,11 +101,47 @@ export function createRenderTileMap(stage: Container) {
             return
         }
 
-        renderLayer(layer, map.tileSet, texture)
+        const tileSet = map.tileSet
 
-        if (enableCollision) {
-            setCollisions(layer, eid)
+        const matrix = unFlatten<number[]>(layer.data, layer.width)
+        const mapPositions = [] as number[]
+
+        for (let y = 0; y < matrix.length; y++) {
+            const row = matrix[y]
+
+            for (let x = 0; x < row.length; x++) {
+                const id = row[x]
+
+                if (id === 0) continue
+
+                const frameLineX = (id % tileSet.columns) - 1
+                const frameLineY = Math.floor(id / tileSet.columns)
+
+                const frameX = frameLineX * tileSet.tilewidth
+                const frameY = frameLineY * tileSet.tileheight
+
+                const frame = new Rectangle(frameX, frameY, tileSet.tilewidth, tileSet.tileheight)
+
+                const tile = new Texture({
+                    source: texture.source,
+                    frame,
+                })
+
+                const spriteY = y * tileSet.tileheight
+                const spriteX = x * tileSet.tilewidth
+
+                const sprite = new Sprite(tile)
+
+                sprite.y = spriteY
+                sprite.x = spriteX
+
+                mapPositions.push(spriteX, spriteY, tileSet.tilewidth, tileSet.tileheight)
+
+                stage.addChild(sprite)
+            }
         }
+
+        setPositions(mapPositions)
 
         setIsLoaded(1)
 

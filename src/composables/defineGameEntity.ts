@@ -4,6 +4,7 @@ import { GameWord } from './createGameWord'
 interface GameEntity {
     id: number
     addComponent: (component: Component) => void
+    addManyComponents: (...components: Component[]) => void
     world: GameWord
 }
 
@@ -15,6 +16,12 @@ export function defineGameEntity<T>(fn: (world: GameEntity) => T){
             baseAddComponent(world, component, id)
         }
 
-        return fn({ id, addComponent, world })
+        const addManyComponents: GameEntity['addManyComponents'] = (...components: Component[]) => {
+            components.forEach(addComponent)
+        }
+
+
+
+        return fn({ id, addComponent, addManyComponents, world })
     }
 }

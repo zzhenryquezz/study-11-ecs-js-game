@@ -8,6 +8,7 @@ import { createKeyboard } from './systems/createKeyboard'
 import { createMovement } from './systems/createMovement'
 import { createTransform } from './systems/createTransform'
 import { createLevel } from './entities/createLevel'
+import { createCollision } from './systems/createCollision'
 
 export function createGame(){    
     const world = createGameWord()
@@ -16,16 +17,21 @@ export function createGame(){
     async function start(){
 
         const systems = [
+
             createTime(),
             createKeyboard(),
+
+            createCollision(),
+            
             createMovement(),
             createTransform(),
+
             await createRender(world),
         ]
 
         const pipeline = pipe(...systems)
 
-        createPlayer(world).move(100, 100)  
+        createPlayer(world)
         createLevel(world)
 
         setInterval(() => pipeline(world), 16)
