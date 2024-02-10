@@ -6,13 +6,21 @@ import {  Container, Rectangle, Sprite, Texture } from 'pixi.js'
 import { XMLParser } from 'fast-xml-parser'
 
 interface TileSet {
+    // image size
     width: number
     height: number
-    count: number
+
+    // tile sizes
+    tilewidth: number
+    tileheight: number
+    tilecount: number
+
+    // line size
     columns: number
 }
 
 interface Layer {
+    name: string
     data: number[]
     width: number
 }
@@ -46,82 +54,91 @@ export function createRenderTileMap(stage: Container) {
         const layers = contentLayers.map((l: any) => ({
             data: l.data['#text'].split(',').map(Number),
             width: l.width,
+            name: l.name,
         }))
 
         tileMaps.set(name, {
             layers,
             tileSet: {
-                width: Number(content.map.tileset.tilewidth),
-                height: Number(content.map.tileset.tileheight),
-                count: Number(content.map.tileset.tilecount),
+                width: Number(content.map.tileset.image.width),
+                height: Number(content.map.tileset.image.height),
+                tilewidth: Number(content.map.tileset.tilewidth),
+                tileheight: Number(content.map.tileset.tileheight),
+                tilecount: Number(content.map.tileset.tilecount),
                 columns: Number(content.map.tileset.columns),
             },
         })
     })
 
     function renderLayer(layer: Layer, tileSet: TileSet, texture: Texture) {
-        const data = layer.data
+        const matrix = unFlatten<number[]>(layer.data, layer.width)
 
-        const layerWidth = layer.width
-        
-        const tileSetWidth = texture.width
+        for (let y = 0; y < matrix.length; y++) {
+            const row = matrix[y]
 
-        const coordinates = new Map<number, number[]>()
+            for (let x = 0; x < row.length; x++) {
+                const id = row[x]
 
-        const total = tileSet.count
+                if (id === 0) continue
 
-        let count = 1
-        let x = 0
-        let y = 0
+                const frameLineX = (id % tileSet.columns) - 1
+                const frameLineY = Math.floor(id / tileSet.columns)
 
-        for (let i = 0; i < total; i++) {            
-            const value = [x, y]
-            
-            coordinates.set(count, value)
-            
-            x += 16
-            count++
+                const frameX = frameLineX * tileSet.tilewidth
+                const frameY = frameLineY * tileSet.tileheight
 
-            // if is the last tile in the row reset x and increase y
-            if (x === tileSetWidth) {
-                x = 0
-                y += 16
+                const frame = new Rectangle(frameX, frameY, tileSet.tilewidth, tileSet.tileheight)
+
+                const tile = new Texture({
+                    source: texture.source,
+                    frame,
+                })
+
+                const sprite = new Sprite(tile)
+
+                sprite.y = y * tileSet.tileheight
+                sprite.x = x * tileSet.tilewidth
+
+                stage.addChild(sprite)
             }
         }
+    }
 
-        for (let i = 0; i < data.length; i++) {
+    function setCollisions(layer: Layer, eid: number){
 
-            const id = Number(data[i])
+        const tileMap = useTileMap(eid)
+
+        const result = []
+
+        for (let i = 0; i < layer.data.length; i++) {
+            const id = layer.data[i]
 
             if (id === 0) continue
 
-            const [frameX, frameY] = coordinates.get(id) || [0, 0]
-            const frame = new Rectangle(frameX, frameY, 16, 16)
+            const x = i % layer.width * 16
+            const y = Math.floor(i / layer.width) * 16
 
-            const tile = new Texture({
-                source: texture.source,
-                frame,
-            })
-
-            const spriteX = i % layerWidth * 16
-            const spriteY = Math.floor(i / layerWidth) * 16
-    
-            const sprite = new Sprite(tile)
-    
-            sprite.y = spriteY
-            sprite.x = spriteX
-    
-            stage.addChild(sprite)
+            result.push({ x, y })         
         }
 
+        const positions = result.map(r => [r.x, r.y, 16, 16]).flat()
+
+        tileMap.setPositions(positions)
     }
 
     function onEnter(eid: number) {
-        const tmx = decode(TileMap.tmx[eid])
-        const image = decode(TileMap.image[eid])
+
+        const {
+            tmx,
+            image,
+            layerName,
+            enableCollision,
+            setIsLoaded
+        } = useTileMap(eid)
 
         const map = tileMaps.get(tmx)
         const texture = Texture.from(image)
+        const layer = map?.layers.find(l => l.name === layerName)
 
         if (!map) {
             console.error('tmx file not found', tmx)
@@ -132,8 +149,21 @@ export function createRenderTileMap(stage: Container) {
             console.error('texture not found', image)
             return
         }
+        
 
-        map.layers.forEach(l => renderLayer(l, map.tileSet, texture))
+        if (!layer) {
+            console.error('layerName not found', layerName)
+            return
+        }
+
+        renderLayer(layer, map.tileSet, texture)
+
+        if (enableCollision) {
+            setCollisions(layer, eid)
+        }
+
+        setIsLoaded(1)
+
     }
 
     
