@@ -16,7 +16,7 @@ export const createPlayer = defineGameEntity(({ id, addManyComponents }) => {
         Collision
     )
 
-    Movement.speed[id] = 5
+    Movement.speed[id] = .5
     
     Camera.size[id] = 400
     Camera.stroke[id] = 1

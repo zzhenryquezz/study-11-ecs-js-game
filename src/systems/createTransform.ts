@@ -7,9 +7,11 @@ export function createTransform() {
 
     return defineGameSystem(world => {
 
+        const { time } = world
+
         for (const eid of query(world)) {
-            Position.x[eid] += Velocity.x[eid]
-            Position.y[eid] += Velocity.y[eid]
+            Position.x[eid] += Velocity.x[eid] * time.delta
+            Position.y[eid] += Velocity.y[eid] * time.delta
         }
 
         return world

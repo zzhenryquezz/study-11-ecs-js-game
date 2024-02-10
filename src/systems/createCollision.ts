@@ -1,10 +1,9 @@
 import Collision from '@/components/Collision'
-import Movement from '@/components/Movement'
 import Position from '@/components/Position'
-import SpriteSheet from '@/components/SpriteSheet'
 import TileMap from '@/components/TileMap'
 import Velocity from '@/components/Velocity'
-import { defineQuery, enterQuery, hasComponent } from 'bitecs'
+import { GameWord } from '@/composables/createGameWord'
+import { defineQuery, hasComponent } from 'bitecs'
 
 interface ICollision {
     x: number
@@ -62,8 +61,32 @@ export function createCollision() {
         return null
     }
 
+
+    function updateVelocity(eid: number, a: ICollision, b: ICollision){
+
+        // came from the left
+        if (Velocity.x[eid] < 0) {
+            Position.x[eid] = b.x + b.width
+        }
+
+        // came from the right
+        if (Velocity.x[eid] > 0) {
+            Position.x[eid] = b.x - a.width
+        }
+
+        // came from the top
+        if (Velocity.y[eid] < 0) {
+            Position.y[eid] = b.y + b.height
+        }
+
+        // came from the bottom
+        if (Velocity.y[eid] > 0) {
+            Position.y[eid] = b.y - a.height 
+        }
+    }
+
     
-    function onUpdate(eid: number) {
+    function onUpdate(word: GameWord, eid: number) {
         Collision.isColliding[eid] = 0
 
         const collision = findTileMapCollision(eid)
@@ -71,12 +94,16 @@ export function createCollision() {
         if (collision) {
             Collision.isColliding[eid] = 1
         }
+
+        if (collision && hasComponent(word, Velocity, eid)) {            
+            updateVelocity(eid, useCollision(eid), collision.collision)            
+        }
     }
 
     return defineGameSystem(world => {
 
         for (const eid of collisionQuery(world)) {
-            onUpdate(eid)
+            onUpdate(world, eid)
         }
 
         for (const eid of tileMapQuery(world)) {

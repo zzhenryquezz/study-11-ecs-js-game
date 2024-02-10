@@ -1,6 +1,5 @@
 import Collision from '@/components/Collision'
 import Position from '@/components/Position'
-import TileMap from '@/components/TileMap'
 import { defineQuery, enterQuery } from 'bitecs'
 import { Container, Graphics } from 'pixi.js'
 

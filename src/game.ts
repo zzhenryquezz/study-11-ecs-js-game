@@ -21,10 +21,14 @@ export function createGame(){
             createTime(),
             createKeyboard(),
 
+            
+            
+            createTransform(),
+            
             createCollision(),
             
             createMovement(),
-            createTransform(),
+            
 
             await createRender(world),
         ]

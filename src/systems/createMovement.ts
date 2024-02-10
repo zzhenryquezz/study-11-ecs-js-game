@@ -17,10 +17,12 @@ export function createMovement() {
             
             if (world.keyboard['ArrowUp']) {
                 Velocity.y[eid] = speed * -1
+                return
             }
 
             if (world.keyboard['ArrowDown']) {
                 Velocity.y[eid] = speed
+                return
             }
 
             if (world.keyboard['ArrowLeft']) {
@@ -30,6 +32,7 @@ export function createMovement() {
                     SpriteSheet.flipX[eid] = 1
                 }
 
+                return
             }
 
             if (world.keyboard['ArrowRight']) {
@@ -38,6 +41,8 @@ export function createMovement() {
                 if (hasComponent(world, SpriteSheet, eid)) {
                     SpriteSheet.flipX[eid] = 0
                 }
+
+                return
             }
 
             

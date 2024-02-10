@@ -1,5 +1,5 @@
 import TileMap from '@/components/TileMap'
-import { defineQuery, enterQuery } from 'bitecs'
+import { defineQuery } from 'bitecs'
 import { Container, Graphics } from 'pixi.js'
 
 
