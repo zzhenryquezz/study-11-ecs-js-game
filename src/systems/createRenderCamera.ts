@@ -67,7 +67,7 @@ export async function createRenderCamera (stage: Container, renderer: Renderer) 
 
     return defineGameSystem(world => {
         for (const eid of query(world)) {
-            setCamera(eid, world.camera)
+            setCamera(eid, world.screen)
         }
         
         return world

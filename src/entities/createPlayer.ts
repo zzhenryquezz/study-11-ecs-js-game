@@ -15,7 +15,7 @@ export const createPlayer = defineGameEntity(({ id, addComponent }) => {
     
     Camera.size[id] = 500
     Camera.stroke[id] = 1
-    // Camera.active[id] = 1
+    Camera.active[id] = 1
 
     const player = usePlayer(id)
 

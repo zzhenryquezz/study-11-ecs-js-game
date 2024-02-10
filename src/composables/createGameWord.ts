@@ -1,16 +1,28 @@
 import { createWorld } from 'bitecs'
 
 export function createGameWord(){
+    const width = 1600
+    const height = 1200
 
-    const radio = window.innerWidth / window.innerHeight
+    const originalScale = width / height
+    const targetScale = window.innerWidth / window.innerHeight
 
-    const screenWidth = Math.min(1600, window.innerWidth)
-    const screenHeight = Math.min(1200, window.innerHeight)
+    let screenWidth = width
+    let screenHeight = height
 
-    const cameraHeight = screenHeight * 0.4
-    const cameraWidth = cameraHeight * radio
+    // decrease width or height
+    if (window.innerWidth <= width || window.innerHeight <= height) {
+        if (targetScale < originalScale) {
+            screenWidth = window.innerWidth
+            screenHeight = screenWidth / originalScale
+        } else {
+            screenHeight = window.innerHeight
+            screenWidth = screenHeight * originalScale
+        }
+    }
 
     return createWorld({
+        keyboard: {} as Record<KeyboardEvent['code'], boolean>,
         tiles: {
             size: 32,
         },
@@ -23,13 +35,6 @@ export function createGameWord(){
             elapsed: 0,
             then: performance.now()
         },
-        keyboard: {} as Record<KeyboardEvent['code'], boolean>,
-        camera: {
-            x: 50,
-            y: 50,
-            width: cameraWidth,
-            height: cameraHeight,
-        }
     })
 }
 

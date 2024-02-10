@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "bitecs": "^0.3.40",
+    "fast-xml-parser": "^4.3.4",
     "lodash-es": "^4.17.21",
     "pixi.js": "^8.0.0-rc.8"
   }

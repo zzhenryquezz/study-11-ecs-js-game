@@ -8,6 +8,7 @@ import { createRenderTile } from './createRenderTile'
 import { createRenderSprite } from './createRenderSprite'
 import { createRenderCamera } from './createRenderCamera'
 import { GameWord } from '@/composables/createGameWord'
+import { createRenderTileMap } from './createRenderTilemap'
 
 
 export async function createRender (world: GameWord) {
@@ -83,6 +84,7 @@ export async function createRender (world: GameWord) {
         createRenderTile(stage),
         createRenderSprite(stage),
         createRenderCamera(stage,renderer),
+        createRenderTileMap(stage)
     ])
 
     const pipeline = pipe(...subsystems)

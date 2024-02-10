@@ -11,4 +11,5 @@ export default defineComponent({
     height: Types.ui8,
     frameSize: Types.ui8,
     frameCount: Types.ui8,
+    flipX: Types.ui8,
 })

@@ -88,10 +88,13 @@ export async function createRenderSpriteSheet (stage: Container) {
         function onUpdate(eid: number) {
             const x = Position.x[eid]
             const y = Position.y[eid]
+            const flipX = SpriteSheet.flipX[eid]
 
             const animation = gameObjects.get(eid)
 
             if (!animation) return
+
+            animation.scale.x = flipX ? -1 : 1
 
             animation.x = x
             animation.y = y
