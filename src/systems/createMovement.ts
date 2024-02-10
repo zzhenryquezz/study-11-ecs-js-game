@@ -1,6 +1,5 @@
 import Movement from '@/components/Movement'
 import Position from '@/components/Position'
-import Sprite from '@/components/Sprite'
 import SpriteSheet from '@/components/SpriteSheet'
 import Velocity from '@/components/Velocity'
 import { defineQuery, hasComponent } from 'bitecs'
