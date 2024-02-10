@@ -38,7 +38,7 @@ Collect all the coins in the game world, and return to the starting point.
 - [x] Movement
 - [x] Camera
 - [x] Tiled integration (tmx files)
-- [ ] Collision
+- [x] Collision
 - [ ] Collectable
 - [ ] Inventory
 - [ ] Room Transition
