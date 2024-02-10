@@ -20,8 +20,12 @@ Collect all the coins in the game world, and return to the starting point.
 - [vite](https://vitejs.dev/)
 - [pixi.js](https://pixijs.com/)
 - [bitECS](https://github.com/NateTheGreatt/bitECS)
-- [assets pack](https://anokolisa.itch.io/dungeon-crawler-pixel-art-asset-pack)
 - [tiled](https://www.mapeditor.org/)
+
+## Sprites
+
+- [Pixel Crawler](https://anokolisa.itch.io/dungeon-crawler-pixel-art-asset-pack)
+- [Coin](https://totuslotus.itch.io/pixel-coins)
 
 ## References
 
