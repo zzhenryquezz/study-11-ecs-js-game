@@ -91,6 +91,9 @@ export async function createRender (world: GameWord) {
 
     return defineGameSystem((world) => {
 
+        stage.scale.x = screen.scale
+        stage.scale.y = screen.scale
+
         pipeline(world)
 
         renderer.render(stage)

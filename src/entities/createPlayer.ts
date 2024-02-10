@@ -13,7 +13,7 @@ export const createPlayer = defineGameEntity(({ id, addComponent }) => {
 
     Movement.speed[id] = 5
     
-    Camera.size[id] = 500
+    Camera.size[id] = 400
     Camera.stroke[id] = 1
     Camera.active[id] = 1
 

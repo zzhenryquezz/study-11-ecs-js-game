@@ -27,16 +27,14 @@ export async function createRenderCamera (stage: Container, renderer: Renderer) 
 
 
         if (active) {
-            const stageX = Math.min(0, -xCenter * scaleX)
-            const stageY = Math.min(0, -yCenter * scaleY)
-            const maxStageX = -(renderer.width - width) * scaleX
-            const maxStageY = -(renderer.height - height) * scaleY
+            const stageX = -xCenter * scaleX
+            const stageY = -yCenter * scaleY
 
             stage.scale.x = scaleX
             stage.scale.y = scaleY
 
-            stage.x = Math.max(stageX, maxStageX)
-            stage.y = Math.max(stageY, maxStageY)
+            stage.x = stageX
+            stage.y = stageY
         }
 
 
@@ -56,12 +54,7 @@ export async function createRenderCamera (stage: Container, renderer: Renderer) 
 
         graphic.clear()
 
-        const graphicX = Math.max(0, xCenter)
-        const graphicY = Math.max(0, yCenter)
-        const maxGraphicX = renderer.width - width
-        const maxGraphicY = renderer.height - height
-
-        graphic.rect(Math.min(graphicX, maxGraphicX), Math.min(graphicY, maxGraphicY) , width, height).stroke('yellow')
+        graphic.rect(xCenter, yCenter , width, height).stroke('yellow')
         
     }
 
