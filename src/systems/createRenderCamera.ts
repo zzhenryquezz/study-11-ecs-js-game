@@ -8,6 +8,7 @@ export async function createRenderCamera (stage: Container, renderer: Renderer) 
     const query = defineQuery([Camera, Position])
 
     const cameraGraphics = new Map<number, Graphics>()
+
     function setCamera(eid: number, screen: GameWord['screen']) {
         const size = Camera.size[eid]        
         const x = Position.x[eid]
@@ -36,6 +37,11 @@ export async function createRenderCamera (stage: Container, renderer: Renderer) 
             stage.x = stageX
             stage.y = stageY
         }
+
+        Camera.currentX[eid] = xCenter
+        Camera.currentY[eid] = yCenter
+        Camera.currentWidth[eid] = width
+        Camera.currentHeight[eid] = height
 
 
         if (!stroke) return

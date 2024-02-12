@@ -24,7 +24,6 @@ export const createLevel = defineGameEntity(({ world }) => {
         [300, 100],
 
         [100, 200],
-        [200, 200],
         [300, 200],
 
         [100, 300],

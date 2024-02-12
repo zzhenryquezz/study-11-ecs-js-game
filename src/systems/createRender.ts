@@ -11,6 +11,7 @@ import { GameWord } from '@/composables/createGameWord'
 import { createRenderTileMap } from './createRenderTilemap'
 import { createRenderTileMapCollision } from './createRenderTileMapCollision'
 import { createRenderCollision } from './createRenderColission'
+import { createRenderInventory } from './createRenderInventory'
 
 
 export async function createRender (world: GameWord) {
@@ -29,6 +30,7 @@ export async function createRender (world: GameWord) {
         height: fixedHeight,
         backgroundColor: 'black',
         antialias: false,
+        roundPixels: false,
     })
 
     const canvas = renderer.view.canvas as HTMLCanvasElement
@@ -83,9 +85,9 @@ export async function createRender (world: GameWord) {
         createRenderDebug(stage, renderer),
         createRenderTile(stage),
         createRenderSprite(stage),
-        createRenderCamera(stage,renderer),
-        
+        createRenderCamera(stage,renderer),        
         createRenderTileMap(stage),
+        createRenderInventory(stage),
         
         // debug
         createRenderTileMapCollision(stage),
