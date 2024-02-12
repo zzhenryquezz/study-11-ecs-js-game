@@ -1,7 +1,6 @@
-import { Container, Graphics, Renderer, Text } from 'pixi.js'
-import { GameWord } from '@/composables/createGameWord'
+import { Container, Text } from 'pixi.js'
 import Camera from '@/components/Camera'
-import { defineQuery, enterQuery } from 'bitecs'
+import { defineQuery } from 'bitecs'
 import Position from '@/components/Position'
 import Inventory from '@/components/Inventory'
 

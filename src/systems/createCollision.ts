@@ -68,7 +68,7 @@ export function createCollision() {
     }
 
 
-    function updateVelocity(eid: number, a: ICollision, b: ICollision){
+    function updateVelocity(eid: number, a: IIntersectItem, b: IIntersectItem){
 
         // came from the left
         if (Velocity.x[eid] < 0) {
