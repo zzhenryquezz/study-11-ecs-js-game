@@ -43,8 +43,8 @@ Collect all the coins in the game world, and return to the starting point.
 - [x] Camera
 - [x] Tiled integration (tmx files)
 - [x] Collision
-- [ ] Collectable
-- [ ] Inventory
+- [x] Collectable
+- [x] Inventory
 - [ ] Room Transition
 
 ## Setup
