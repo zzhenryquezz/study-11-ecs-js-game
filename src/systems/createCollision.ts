@@ -3,20 +3,14 @@ import Position from '@/components/Position'
 import TileMap from '@/components/TileMap'
 import Velocity from '@/components/Velocity'
 import { GameWord } from '@/composables/createGameWord'
+import { IIntersectItem } from '@/composables/intersect'
 import { defineQuery, hasComponent } from 'bitecs'
-
-interface ICollision {
-    x: number
-    y: number
-    width: number
-    height: number
-}
 
 export function createCollision() {
     const collisionQuery = defineQuery([Collision, Position])
     const tileMapQuery = defineQuery([TileMap])
 
-    const tileMapPositions = new Map<number, ICollision[]>()
+    const tileMapPositions = new Map<number, IIntersectItem[]>()
 
     function onUpdateTileMap(eid: number) {
         const map = useTileMap(eid)
@@ -36,13 +30,6 @@ export function createCollision() {
 
         tileMapPositions.set(eid, collisions)
     }
-
-    function intersect(a: ICollision, b: ICollision){
-        return a.x < b.x + b.width &&
-            a.x + a.width > b.x &&
-            a.y < b.y + b.height &&
-            a.y + a.height > b.y
-    }
     
     function findTileMapCollision(eid: number){
         const a = useCollision(eid)
@@ -54,6 +41,25 @@ export function createCollision() {
                         eid,
                         collision: b
                     }
+                }
+            }
+        }
+
+        return null
+    }
+
+    function findEntityCollision(eid: number, world: GameWord){
+        const a = useCollision(eid)
+
+        for (const eid of collisionQuery(world)) {
+            if (eid === a.eid) continue
+
+            const b = useCollision(eid)
+
+            if (intersect(a, b)) {
+                return {
+                    eid,
+                    collision: b
                 }
             }
         }
@@ -85,19 +91,36 @@ export function createCollision() {
         }
     }
 
+    function checkTileMapCollision(eid: number, world: GameWord){
+        const collision = findTileMapCollision(eid)
+
+        Collision.isColliding[eid] = collision ? 1 : 0
+
+        // only update velocity if is colliding with a tile map
+        if (collision && hasComponent(world, Velocity, eid)) {            
+            updateVelocity(eid, useCollision(eid), collision.collision)            
+        }
+
+        return !!collision
+    }
+
+    function checkEntityCollision(eid: number, world: GameWord){
+        const collision = findEntityCollision(eid, world)
+
+        Collision.isColliding[eid] = collision ? 1 : 0
+        Collision.collidedEntity[eid] = collision ? collision.eid : 0
+
+        return !!collision
+    }
+
     
     function onUpdate(word: GameWord, eid: number) {
         Collision.isColliding[eid] = 0
+        Collision.collidedEntity[eid] = 0
 
-        const collision = findTileMapCollision(eid)
+        if (checkTileMapCollision(eid, word)) return
 
-        if (collision) {
-            Collision.isColliding[eid] = 1
-        }
-
-        if (collision && hasComponent(word, Velocity, eid)) {            
-            updateVelocity(eid, useCollision(eid), collision.collision)            
-        }
+        checkEntityCollision(eid, word)
     }
 
     return defineGameSystem(world => {

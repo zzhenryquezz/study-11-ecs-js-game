@@ -1,5 +1,6 @@
 import { Types, defineComponent } from 'bitecs'
 
 export default defineComponent({
-    eidList: [Types.ui32, 10],
+    // array of string of items
+    coins: Types.ui8,
 })

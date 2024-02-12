@@ -1,6 +1,6 @@
 import Collision from '@/components/Collision'
 import Position from '@/components/Position'
-import { defineQuery, enterQuery } from 'bitecs'
+import { defineQuery, enterQuery, exitQuery } from 'bitecs'
 import { Container, Graphics } from 'pixi.js'
 
 
@@ -40,6 +40,17 @@ export function createRenderCollision(stage: Container) {
         
     }
 
+    function onExit(eid: number) {
+        const id = `${eid}`
+
+        const graphics = gameObjects.get(id)
+
+        if (!graphics) return
+
+        stage.removeChild(graphics)
+        gameObjects.delete(id)
+    }
+
     return defineGameSystem(world => {
 
         for (const eid of enterQuery(query)(world)) {
@@ -48,6 +59,10 @@ export function createRenderCollision(stage: Container) {
 
         for (const eid of query(world)) {
             onUpdate(eid)
+        }
+
+        for (const eid of exitQuery(query)(world)) {
+            onExit(eid)
         }
 
         return world

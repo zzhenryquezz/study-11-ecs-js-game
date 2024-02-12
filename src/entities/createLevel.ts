@@ -1,4 +1,4 @@
-import { createItem } from './createItem'
+import { createCollectable } from './createCollectable'
 import { createTileMap } from './createTileMap'
 
 export const createLevel = defineGameEntity(({ world }) => {
@@ -18,10 +18,24 @@ export const createLevel = defineGameEntity(({ world }) => {
         .setEnableCollision(1)
 
 
-    const itemsPositions = [[100, 100]]
+    const itemsPositions = [
+        [100, 100],
+        [200, 100],
+        [300, 100],
+
+        [100, 200],
+        [200, 200],
+        [300, 200],
+
+        [100, 300],
+        [200, 300],
+        [300, 300],
+    ]
 
     for (const [x, y] of itemsPositions){        
-        const { position, sheet  } = createItem(world)
+        const { position, sheet, collision  } = createCollectable(world)
+
+        collision.setSize(16, 16)
 
         position.setPosition(x, y)
 

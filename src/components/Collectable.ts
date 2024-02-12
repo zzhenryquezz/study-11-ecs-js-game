@@ -1,3 +1,5 @@
-import { defineComponent } from 'bitecs'
+import { Types, defineComponent } from 'bitecs'
 
-export default defineComponent({})
+export default defineComponent({
+    name: [Types.ui8, 32],
+})

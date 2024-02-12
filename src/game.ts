@@ -9,6 +9,7 @@ import { createMovement } from './systems/createMovement'
 import { createTransform } from './systems/createTransform'
 import { createLevel } from './entities/createLevel'
 import { createCollision } from './systems/createCollision'
+import { createCollectable } from './systems/createCollectable'
 
 export function createGame(){    
     const world = createGameWord()
@@ -17,19 +18,12 @@ export function createGame(){
     async function start(){
 
         const systems = [
-
             createTime(),
             createKeyboard(),
-
-            
-            
             createTransform(),
-            
             createCollision(),
-            
             createMovement(),
-            
-
+            createCollectable(),
             await createRender(world),
         ]
 

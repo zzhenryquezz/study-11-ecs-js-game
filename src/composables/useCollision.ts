@@ -5,6 +5,7 @@ export function useCollision(eid: number){
     let width = Collision.width[eid]
     let height = Collision.height[eid]
     let isColliding = Collision.isColliding[eid] === 1
+    let collidedEntity = Collision.collidedEntity[eid]
     
     let x = Position.x[eid]
     let y = Position.y[eid]
@@ -16,6 +17,7 @@ export function useCollision(eid: number){
         x = Position.x[eid]
         y = Position.y[eid]
         isColliding = Collision.isColliding[eid] === 1
+        collidedEntity = Collision.collidedEntity[eid]
     }
 
     function setSize(newWidth: number, newHeight: number){
@@ -31,6 +33,7 @@ export function useCollision(eid: number){
         width,
         height,
         isColliding,
+        collidedEntity,
 
         x,
         y,

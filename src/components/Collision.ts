@@ -5,4 +5,6 @@ export default defineComponent({
     height: Types.f32,
 
     isColliding: Types.ui8,
+
+    collidedEntity: Types.eid
 })
